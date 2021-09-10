@@ -5,15 +5,18 @@ import { StatusBar } from "expo-status-bar";
 import AuthStackNavigation from "./src/navigation/AuthStackNavigation";
 import { Provider as PaperProvider } from "react-native-paper";
 import { Provider as StoreProvider } from "react-redux";
-import { store } from "./src/backend/redux/store";
+import { store, persistor } from "./src/backend/redux/store";
+import { PersistGate } from "redux-persist/integration/react";
 
 export default function App() {
   return (
     <StoreProvider store={store}>
-      <PaperProvider theme={theme}>
-        <AuthStackNavigation />
-        <StatusBar style="auto" />
-      </PaperProvider>
+      <PersistGate loading={null} persistor={persistor}>
+        <PaperProvider theme={theme}>
+          <AuthStackNavigation />
+          <StatusBar style="auto" />
+        </PaperProvider>
+      </PersistGate>
     </StoreProvider>
   );
 }
